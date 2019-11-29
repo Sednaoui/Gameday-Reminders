@@ -6,7 +6,7 @@ class SMSForm extends Component {
     super(props);
     this.state = {
       message: {
-        to: '',
+        to: [],
         body: ''
       },
       submitting: false,
@@ -33,7 +33,6 @@ class SMSForm extends Component {
             error: false,
             submitting: false,
             message: {
-              to: '',
               body: ''
             }
           });
@@ -61,13 +60,17 @@ class SMSForm extends Component {
       >
         <div>
           <label htmlFor="to">To:</label>
-          <input
+          <select
+            required
             type="tel"
-            name="to"
             id="to"
-            value={this.state.message.to}
+            name="to"
             onChange={this.onHandleChange}
-          />
+            value={this.state.message.to}>
+            <option value={null}>-</option>
+            <option value={'+33660681565'}>Equipe A</option>
+            <option value={'+33660681565'}>Equipe B</option>
+          </select>
         </div>
         <div>
           <label htmlFor="body">Body:</label>
