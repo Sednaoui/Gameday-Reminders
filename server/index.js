@@ -19,12 +19,17 @@ app.get('/api/greeting', (req, res) => {
 
 app.post('/api/messages', (req, res) => {
   res.header('Content-Type', 'application/json');
-  client.messages
-    .create({
-      from: process.env.TWILIO_PHONE_NUMBER,
-      to: req.body.to,
-      body: req.body.body
+  // TODO: make database with numbers and let numbers = req.body.to;
+  let numbers = ['+33660681565', '+33660681565'];
+  Promise.all(
+    numbers.map(number => {
+      return client.messages.create({
+        from: process.env.TWILIO_MESSAGING_SERVICE_SID,
+        to: number,
+        body: req.body.body
+      })
     })
+  )
     .then(() => {
       res.send(JSON.stringify({ success: true }));
     })
